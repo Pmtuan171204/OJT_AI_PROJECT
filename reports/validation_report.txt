@@ -1,0 +1,57 @@
+============================================================
+OJT DATASET VALIDATION REPORT
+============================================================
+
+Generated Time : 2026-07-17 09:55:41.675183
+
+Passed Rules : 15
+Failed Rules : 0
+Data Quality Score : 100.0%
+Dataset Status : READY FOR TRAINING
+
+============================================================
+[PASS] Dataset File
+Dataset file found.
+------------------------------------------------------------
+[PASS] Missing Values
+No missing values found.
+------------------------------------------------------------
+[PASS] Duplicate Student ID
+No duplicate student IDs.
+------------------------------------------------------------
+[PASS] GPA Range
+All GPA values are valid.
+------------------------------------------------------------
+[PASS] Completed Credits
+Completed credits are valid.
+------------------------------------------------------------
+[PASS] Remaining Credits
+Remaining credits are correct.
+------------------------------------------------------------
+[PASS] Completion Rate
+Completion rate is correct.
+------------------------------------------------------------
+[PASS] Remaining To OJT
+Remaining credits to OJT are valid.
+------------------------------------------------------------
+[PASS] Risk Score
+Risk score is valid.
+------------------------------------------------------------
+[PASS] Risk Level
+Risk levels are valid.
+------------------------------------------------------------
+[PASS] Delay Risk
+Delay risk labels are valid.
+------------------------------------------------------------
+[PASS] OJT Eligible
+Eligibility values are valid.
+------------------------------------------------------------
+[PASS] Readiness
+Readiness values are valid.
+------------------------------------------------------------
+[PASS] AI Recommendation
+Recommendation column is valid.
+------------------------------------------------------------
+[PASS] Student Profile
+Student profiles are valid.
+------------------------------------------------------------
