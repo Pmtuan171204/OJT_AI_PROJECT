@@ -7,15 +7,16 @@ Business logic for OJT Risk Prediction
 ==========================================================
 """
 
-from config import (
+from data.generator.config import (
     LOW_RISK_MAX,
     MEDIUM_RISK_MAX,
-    REQUIRED_CREDITS_FOR_OJT
+    REQUIRED_CREDITS_FOR_OJT,
 )
 
 # ==========================================================
 # RISK SCORE
 # ==========================================================
+
 
 def calculate_risk_score(student):
     """
@@ -131,6 +132,7 @@ def calculate_risk_score(student):
 # RISK LEVEL
 # ==========================================================
 
+
 def get_risk_level(score):
     """
     Convert Risk Score to Risk Level.
@@ -148,6 +150,7 @@ def get_risk_level(score):
 # ==========================================================
 # BINARY LABEL
 # ==========================================================
+
 
 def assign_risk_label(score):
     """
@@ -168,6 +171,7 @@ def assign_risk_label(score):
 # OJT ELIGIBILITY
 # ==========================================================
 
+
 def check_ojt_eligibility(student):
     """
     Check whether student satisfies OJT conditions.
@@ -185,6 +189,7 @@ def check_ojt_eligibility(student):
 # ==========================================================
 # OJT READINESS
 # ==========================================================
+
 
 def calculate_ojt_readiness(student):
     """
@@ -212,6 +217,7 @@ def calculate_ojt_readiness(student):
 # AI RECOMMENDATION
 # ==========================================================
 
+
 def generate_ai_recommendation(student):
     """
     Generate recommendation for student.
@@ -223,32 +229,22 @@ def generate_ai_recommendation(student):
 
         remain = REQUIRED_CREDITS_FOR_OJT - student["Credits_Completed"]
 
-        recommendations.append(
-            f"Complete at least {remain} more credits."
-        )
+        recommendations.append(f"Complete at least {remain} more credits.")
 
     if student["Missing_Prerequisite_Courses"] > 0:
 
-        recommendations.append(
-            "Complete all prerequisite courses."
-        )
+        recommendations.append("Complete all prerequisite courses.")
 
     if student["Failed_Courses"] > 0:
 
-        recommendations.append(
-            "Retake failed courses as soon as possible."
-        )
+        recommendations.append("Retake failed courses as soon as possible.")
 
     if student["Academic_Warning_Count"] > 0:
 
-        recommendations.append(
-            "Improve GPA to remove academic warning."
-        )
+        recommendations.append("Improve GPA to remove academic warning.")
 
     if len(recommendations) == 0:
 
-        recommendations.append(
-            "You are ready for OJT."
-        )
+        recommendations.append("You are ready for OJT.")
 
     return " ".join(recommendations)

@@ -15,17 +15,9 @@ import pandas as pd
 # Add Project Root into Python Path
 # ======================================================
 
-CURRENT_DIR = os.path.dirname(
-    os.path.abspath(__file__)
-)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PROJECT_ROOT = os.path.abspath(
-    os.path.join(
-        CURRENT_DIR,
-        "..",
-        ".."
-    )
-)
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
 
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
@@ -52,6 +44,7 @@ from validation_report import ValidationReport
 # Dataset Validator
 # ======================================================
 
+
 class DatasetValidator:
 
     def __init__(self, dataset_path):
@@ -68,9 +61,7 @@ class DatasetValidator:
 
     def load_dataset(self):
 
-        self.df = pd.read_excel(
-            self.dataset_path
-        )
+        self.df = pd.read_excel(self.dataset_path)
 
     # ==================================================
     # Run All Validation Rules
@@ -86,11 +77,7 @@ class DatasetValidator:
         # File Exists
         # -----------------------------
 
-        self.results.append(
-            check_file_exists(
-                self.dataset_path
-            )
-        )
+        self.results.append(check_file_exists(self.dataset_path))
 
         if not self.results[-1]["status"]:
             return
@@ -105,97 +92,41 @@ class DatasetValidator:
         # Dataset Integrity
         # -----------------------------
 
-        self.results.append(
-            check_missing_values(
-                self.df
-            )
-        )
+        self.results.append(check_missing_values(self.df))
 
-        self.results.append(
-            check_duplicate_student_id(
-                self.df
-            )
-        )
+        self.results.append(check_duplicate_student_id(self.df))
 
         # -----------------------------
         # Academic Validation
         # -----------------------------
 
-        self.results.append(
-            check_gpa_range(
-                self.df
-            )
-        )
+        self.results.append(check_gpa_range(self.df))
 
-        self.results.append(
-            check_completed_credits(
-                self.df
-            )
-        )
+        self.results.append(check_completed_credits(self.df))
 
-        self.results.append(
-            check_remaining_credits(
-                self.df
-            )
-        )
+        self.results.append(check_remaining_credits(self.df))
 
-        self.results.append(
-            check_completion_rate(
-                self.df
-            )
-        )
+        self.results.append(check_completion_rate(self.df))
 
-        self.results.append(
-            check_remaining_to_ojt(
-                self.df
-            )
-        )
+        self.results.append(check_remaining_to_ojt(self.df))
 
         # -----------------------------
         # AI Validation
         # -----------------------------
 
-        self.results.append(
-            check_risk_score(
-                self.df
-            )
-        )
+        self.results.append(check_risk_score(self.df))
 
-        self.results.append(
-            check_risk_level(
-                self.df
-            )
-        )
+        self.results.append(check_risk_level(self.df))
 
-        self.results.append(
-            check_delay_risk(
-                self.df
-            )
-        )
+        self.results.append(check_delay_risk(self.df))
 
-        self.results.append(
-            check_ojt_eligible(
-                self.df
-            )
-        )
+        self.results.append(check_ojt_eligible(self.df))
 
-        self.results.append(
-            check_readiness(
-                self.df
-            )
-        )
+        self.results.append(check_readiness(self.df))
 
-        self.results.append(
-            check_ai_recommendation(
-                self.df
-            )
-        )
+        self.results.append(check_ai_recommendation(self.df))
 
-        self.results.append(
-            check_student_profile(
-                self.df
-            )
-        )
+        self.results.append(check_student_profile(self.df))
 
     # ==================================================
     # Print Validation Result
@@ -216,11 +147,7 @@ class DatasetValidator:
 
             status = "PASS" if result["status"] else "FAIL"
 
-            print(
-                f"[{status}] "
-                f"{result['rule']} "
-                f"-> {result['message']}"
-            )
+            print(f"[{status}] " f"{result['rule']} " f"-> {result['message']}")
 
             if result["status"]:
                 passed += 1
@@ -243,6 +170,7 @@ class DatasetValidator:
 
         return self.results
 
+
 # ======================================================
 # Main
 # ======================================================
@@ -255,19 +183,51 @@ def main():
     print(RAW_DATASET_XLSX)
     print()
 
-    validator = DatasetValidator(
-        RAW_DATASET_XLSX
-    )
+    validator = DatasetValidator(RAW_DATASET_XLSX)
 
     validator.validate()
 
     validator.print_result()
 
-    report = ValidationReport(
-        validator.get_results()
-    )
+    # ==================================================
+    # Generate Validation Report
+    # ==================================================
+
+    report = ValidationReport(validator.get_results())
 
     report.generate()
+
+    # ==================================================
+    # Pipeline Quality Gate
+    # ==================================================
+
+    results = validator.get_results()
+
+    failed = [result for result in results if not result["status"]]
+
+    print()
+
+    if len(failed) > 0:
+
+        print("=" * 60)
+        print("VALIDATION FAILED")
+        print("=" * 60)
+
+        print(f"{len(failed)} validation rule(s) failed.")
+
+        print("Pipeline execution stopped.")
+
+        print("=" * 60)
+
+        return
+
+    print("=" * 60)
+    print("VALIDATION PASSED")
+    print("=" * 60)
+
+    print("Dataset is ready for preprocessing and training.")
+
+    print("=" * 60)
 
 
 if __name__ == "__main__":

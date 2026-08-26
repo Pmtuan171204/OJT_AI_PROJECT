@@ -2,7 +2,7 @@
 OJT DATASET VALIDATION REPORT
 ============================================================
 
-Generated Time : 2026-07-17 09:55:41.675183
+Generated Time : 2026-08-26 23:41:07.523440
 
 Passed Rules : 15
 Failed Rules : 0
@@ -32,10 +32,10 @@ Remaining credits are correct.
 Completion rate is correct.
 ------------------------------------------------------------
 [PASS] Remaining To OJT
-Remaining credits to OJT are valid.
+Remaining credits to OJT are correct.
 ------------------------------------------------------------
 [PASS] Risk Score
-Risk score is valid.
+Risk scores are valid.
 ------------------------------------------------------------
 [PASS] Risk Level
 Risk levels are valid.
@@ -44,13 +44,13 @@ Risk levels are valid.
 Delay risk labels are valid.
 ------------------------------------------------------------
 [PASS] OJT Eligible
-Eligibility values are valid.
+OJT eligibility values are valid.
 ------------------------------------------------------------
 [PASS] Readiness
 Readiness values are valid.
 ------------------------------------------------------------
 [PASS] AI Recommendation
-Recommendation column is valid.
+AI recommendations are valid.
 ------------------------------------------------------------
 [PASS] Student Profile
 Student profiles are valid.

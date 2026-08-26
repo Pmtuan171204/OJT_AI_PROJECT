@@ -11,37 +11,34 @@ used before training Machine Learning models.
 import os
 import sys
 
-CURRENT_DIR = os.path.dirname(
-    os.path.abspath(__file__)
-)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PROJECT_ROOT = os.path.abspath(
-    os.path.join(
-        CURRENT_DIR,
-        "..",
-        ".."
-    )
-)
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
 
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
 
 from data.generator.profiles import PROFILES
 
+from data.generator.business_rules import (
+    calculate_risk_score,
+    get_risk_level,
+    check_ojt_eligibility,
+    calculate_ojt_readiness,
+    generate_ai_recommendation,
+)
+
 # ==========================================================
 # Helper Function
 # ==========================================================
+
 
 def create_result(rule, status, message):
     """
     Standard format for every validation result.
     """
 
-    return {
-        "rule": rule,
-        "status": status,
-        "message": message
-    }
+    return {"rule": rule, "status": status, "message": message}
 
 
 # ==========================================================
@@ -49,21 +46,14 @@ def create_result(rule, status, message):
 # File Exists
 # ==========================================================
 
+
 def check_file_exists(file_path):
 
     if os.path.exists(file_path):
 
-        return create_result(
-            "Dataset File",
-            True,
-            "Dataset file found."
-        )
+        return create_result("Dataset File", True, "Dataset file found.")
 
-    return create_result(
-        "Dataset File",
-        False,
-        "Dataset file does not exist."
-    )
+    return create_result("Dataset File", False, "Dataset file does not exist.")
 
 
 # ==========================================================
@@ -71,23 +61,16 @@ def check_file_exists(file_path):
 # Missing Values
 # ==========================================================
 
+
 def check_missing_values(df):
 
     missing = df.isnull().sum().sum()
 
     if missing == 0:
 
-        return create_result(
-            "Missing Values",
-            True,
-            "No missing values found."
-        )
+        return create_result("Missing Values", True, "No missing values found.")
 
-    return create_result(
-        "Missing Values",
-        False,
-        f"Found {missing} missing values."
-    )
+    return create_result("Missing Values", False, f"Found {missing} missing values.")
 
 
 # ==========================================================
@@ -95,22 +78,17 @@ def check_missing_values(df):
 # Duplicate MSSV
 # ==========================================================
 
+
 def check_duplicate_student_id(df):
 
     duplicate = df["MSSV"].duplicated().sum()
 
     if duplicate == 0:
 
-        return create_result(
-            "Duplicate Student ID",
-            True,
-            "No duplicate student IDs."
-        )
+        return create_result("Duplicate Student ID", True, "No duplicate student IDs.")
 
     return create_result(
-        "Duplicate Student ID",
-        False,
-        f"Found {duplicate} duplicated student IDs."
+        "Duplicate Student ID", False, f"Found {duplicate} duplicated student IDs."
     )
 
 
@@ -119,27 +97,16 @@ def check_duplicate_student_id(df):
 # GPA Validation
 # ==========================================================
 
+
 def check_gpa_range(df):
 
-    invalid = df[
-        (df["GPA_Cumulative"] < 0)
-        |
-        (df["GPA_Cumulative"] > 10)
-    ]
+    invalid = df[(df["GPA_Cumulative"] < 0) | (df["GPA_Cumulative"] > 10)]
 
     if len(invalid) == 0:
 
-        return create_result(
-            "GPA Range",
-            True,
-            "All GPA values are valid."
-        )
+        return create_result("GPA Range", True, "All GPA values are valid.")
 
-    return create_result(
-        "GPA Range",
-        False,
-        f"{len(invalid)} invalid GPA values."
-    )
+    return create_result("GPA Range", False, f"{len(invalid)} invalid GPA values.")
 
 
 # ==========================================================
@@ -147,26 +114,19 @@ def check_gpa_range(df):
 # Credits Completed
 # ==========================================================
 
+
 def check_completed_credits(df):
 
     invalid = df[
-        (df["Credits_Completed"] < 0)
-        |
-        (df["Credits_Completed"] > df["Total_Credits"])
+        (df["Credits_Completed"] < 0) | (df["Credits_Completed"] > df["Total_Credits"])
     ]
 
     if len(invalid) == 0:
 
-        return create_result(
-            "Completed Credits",
-            True,
-            "Completed credits are valid."
-        )
+        return create_result("Completed Credits", True, "Completed credits are valid.")
 
     return create_result(
-        "Completed Credits",
-        False,
-        f"{len(invalid)} invalid completed credits."
+        "Completed Credits", False, f"{len(invalid)} invalid completed credits."
     )
 
 
@@ -175,30 +135,21 @@ def check_completed_credits(df):
 # Remaining Credits
 # ==========================================================
 
+
 def check_remaining_credits(df):
 
-    expected = (
-        df["Total_Credits"]
-        -
-        df["Credits_Completed"]
-    )
+    expected = df["Total_Credits"] - df["Credits_Completed"]
 
-    invalid = df[
-        df["Credits_Remaining"] != expected
-    ]
+    invalid = df[df["Credits_Remaining"] != expected]
 
     if len(invalid) == 0:
 
         return create_result(
-            "Remaining Credits",
-            True,
-            "Remaining credits are correct."
+            "Remaining Credits", True, "Remaining credits are correct."
         )
 
     return create_result(
-        "Remaining Credits",
-        False,
-        f"{len(invalid)} invalid remaining credits."
+        "Remaining Credits", False, f"{len(invalid)} invalid remaining credits."
     )
 
 
@@ -207,34 +158,19 @@ def check_remaining_credits(df):
 # Completion Rate
 # ==========================================================
 
+
 def check_completion_rate(df):
 
-    expected = (
-        (
-            df["Credits_Completed"]
-            /
-            df["Total_Credits"]
-        ) * 100
-    ).round(2)
+    expected = ((df["Credits_Completed"] / df["Total_Credits"]) * 100).round(2)
 
-    invalid = df[
-        abs(
-            df["Completion_Rate"] - expected
-        ) > 0.01
-    ]
+    invalid = df[abs(df["Completion_Rate"] - expected) > 0.01]
 
     if len(invalid) == 0:
 
-        return create_result(
-            "Completion Rate",
-            True,
-            "Completion rate is correct."
-        )
+        return create_result("Completion Rate", True, "Completion rate is correct.")
 
     return create_result(
-        "Completion Rate",
-        False,
-        f"{len(invalid)} invalid completion rates."
+        "Completion Rate", False, f"{len(invalid)} invalid completion rates."
     )
 
 
@@ -243,24 +179,20 @@ def check_completion_rate(df):
 # Remaining To OJT
 # ==========================================================
 
+
 def check_remaining_to_ojt(df):
 
-    invalid = df[
-        df["Remaining_To_OJT"] < 0
-    ]
+    expected = (100 - df["Credits_Completed"]).clip(lower=0)
+
+    invalid = df[df["Remaining_To_OJT"] != expected]
 
     if len(invalid) == 0:
-
         return create_result(
-            "Remaining To OJT",
-            True,
-            "Remaining credits to OJT are valid."
+            "Remaining To OJT", True, "Remaining credits to OJT are correct."
         )
 
     return create_result(
-        "Remaining To OJT",
-        False,
-        f"{len(invalid)} invalid values."
+        "Remaining To OJT", False, f"{len(invalid)} invalid Remaining_To_OJT values."
     )
 
 
@@ -271,24 +203,29 @@ def check_remaining_to_ojt(df):
 
 def check_risk_score(df):
 
-    invalid = df[
-        df["Risk_Score"] < 0
-    ]
+    invalid_count = 0
 
-    if len(invalid) == 0:
+    for _, student in df.iterrows():
 
+        expected = calculate_risk_score(student)
+
+        actual = student["Risk_Score"]
+
+        if int(actual) != int(expected):
+            invalid_count += 1
+
+    if invalid_count == 0:
         return create_result(
             "Risk Score",
             True,
-            "Risk score is valid."
+            "Risk scores are valid."
         )
 
     return create_result(
         "Risk Score",
         False,
-        f"{len(invalid)} invalid risk scores."
+        f"{invalid_count} invalid risk scores."
     )
-
 
 # ==========================================================
 # Rule 10
@@ -297,18 +234,20 @@ def check_risk_score(df):
 
 def check_risk_level(df):
 
-    valid = [
-        "Low",
-        "Medium",
-        "High"
-    ]
+    invalid_count = 0
 
-    invalid = df[
-        ~df["Risk_Level"].isin(valid)
-    ]
+    for _, student in df.iterrows():
 
-    if len(invalid) == 0:
+        expected = get_risk_level(
+            student["Risk_Score"]
+        )
 
+        actual = student["Risk_Level"]
+
+        if str(actual) != str(expected):
+            invalid_count += 1
+
+    if invalid_count == 0:
         return create_result(
             "Risk Level",
             True,
@@ -318,9 +257,8 @@ def check_risk_level(df):
     return create_result(
         "Risk Level",
         False,
-        f"{len(invalid)} invalid risk levels."
+        f"{invalid_count} invalid risk levels."
     )
-
 
 # ==========================================================
 # Rule 11
@@ -329,14 +267,22 @@ def check_risk_level(df):
 
 def check_delay_risk(df):
 
-    valid = [0, 1]
+    invalid_count = 0
 
-    invalid = df[
-        ~df["OJT_Delay_Risk"].isin(valid)
-    ]
+    for _, student in df.iterrows():
 
-    if len(invalid) == 0:
+        expected = (
+            0
+            if student["Risk_Score"] <= 10
+            else 1
+        )
 
+        actual = int(student["OJT_Delay_Risk"])
+
+        if actual != expected:
+            invalid_count += 1
+
+    if invalid_count == 0:
         return create_result(
             "Delay Risk",
             True,
@@ -346,7 +292,7 @@ def check_delay_risk(df):
     return create_result(
         "Delay Risk",
         False,
-        f"{len(invalid)} invalid labels."
+        f"{invalid_count} invalid delay risk labels."
     )
 
 
@@ -357,24 +303,30 @@ def check_delay_risk(df):
 
 def check_ojt_eligible(df):
 
-    valid = [True, False]
+    invalid_count = 0
 
-    invalid = df[
-        ~df["OJT_Eligible"].isin(valid)
-    ]
+    for _, student in df.iterrows():
 
-    if len(invalid) == 0:
+        expected = check_ojt_eligibility(
+            student
+        )
 
+        actual = student["OJT_Eligible"]
+
+        if bool(actual) != bool(expected):
+            invalid_count += 1
+
+    if invalid_count == 0:
         return create_result(
             "OJT Eligible",
             True,
-            "Eligibility values are valid."
+            "OJT eligibility values are valid."
         )
 
     return create_result(
         "OJT Eligible",
         False,
-        f"{len(invalid)} invalid eligibility values."
+        f"{invalid_count} invalid OJT eligibility values."
     )
 
 
@@ -385,14 +337,23 @@ def check_ojt_eligible(df):
 
 def check_readiness(df):
 
-    invalid = df[
-        (df["OJT_Readiness"] < 0)
-        |
-        (df["OJT_Readiness"] > 100)
-    ]
+    invalid_count = 0
 
-    if len(invalid) == 0:
+    for _, student in df.iterrows():
 
+        expected = calculate_ojt_readiness(
+            student
+        )
+
+        actual = student["OJT_Readiness"]
+
+        if abs(
+            float(actual) - float(expected)
+        ) > 0.01:
+
+            invalid_count += 1
+
+    if invalid_count == 0:
         return create_result(
             "Readiness",
             True,
@@ -402,7 +363,7 @@ def check_readiness(df):
     return create_result(
         "Readiness",
         False,
-        f"{len(invalid)} invalid readiness values."
+        f"{invalid_count} invalid readiness values."
     )
 
 
@@ -413,22 +374,30 @@ def check_readiness(df):
 
 def check_ai_recommendation(df):
 
-    invalid = df[
-        df["AI_Recommendation"].isnull()
-    ]
+    invalid_count = 0
 
-    if len(invalid) == 0:
+    for _, student in df.iterrows():
 
+        expected = generate_ai_recommendation(
+            student
+        )
+
+        actual = student["AI_Recommendation"]
+
+        if str(actual).strip() != str(expected).strip():
+            invalid_count += 1
+
+    if invalid_count == 0:
         return create_result(
             "AI Recommendation",
             True,
-            "Recommendation column is valid."
+            "AI recommendations are valid."
         )
 
     return create_result(
         "AI Recommendation",
         False,
-        f"{len(invalid)} missing recommendations."
+        f"{invalid_count} invalid AI recommendations."
     )
 
 
@@ -444,20 +413,12 @@ def check_student_profile(df):
 
     valid_profiles = list(PROFILES.keys())
 
-    invalid = df[
-        ~df["Student_Profile"].isin(valid_profiles)
-    ]
+    invalid = df[~df["Student_Profile"].isin(valid_profiles)]
 
     if len(invalid) == 0:
 
-        return create_result(
-            "Student Profile",
-            True,
-            "Student profiles are valid."
-        )
+        return create_result("Student Profile", True, "Student profiles are valid.")
 
     return create_result(
-        "Student Profile",
-        False,
-        f"{len(invalid)} invalid student profiles."
+        "Student Profile", False, f"{len(invalid)} invalid student profiles."
     )
