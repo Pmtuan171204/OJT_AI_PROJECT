@@ -1,0 +1,6 @@
+Class,Precision,Recall,F1_Score,Support
+Safe,0.9972,0.9728,0.9848,734
+At Risk,0.9296,0.9925,0.96,266
+Accuracy,,,0.978,1000
+Macro Avg,0.9634,0.9826,0.9724,1000
+Weighted Avg,0.9792,0.978,0.9782,1000

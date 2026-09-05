@@ -1,0 +1,14 @@
+DATA LEAKAGE CHECK REPORT
+============================================================
+
+[PASS] Row Alignment -> X_train and y_train row counts match.
+[PASS] Target Separation -> Target column is correctly separated.
+[PASS] Direct Leakage -> No known direct leakage features found.
+[WARNING/FAIL] Target Related Features -> Target-related features found: ['Academic_Risk_Index', 'Academic_Stability']
+[PASS] Feature Correlation -> No feature has suspiciously high correlation with the target.
+
+Potential Leakage Features:
+ - None
+
+High Correlation Features:
+ - None

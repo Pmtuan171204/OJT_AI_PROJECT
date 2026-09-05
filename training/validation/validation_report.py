@@ -17,17 +17,9 @@ import pandas as pd
 # Add Project Root
 # ======================================================
 
-CURRENT_DIR = os.path.dirname(
-    os.path.abspath(__file__)
-)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PROJECT_ROOT = os.path.abspath(
-    os.path.join(
-        CURRENT_DIR,
-        "..",
-        ".."
-    )
-)
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
 
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
@@ -36,14 +28,12 @@ if PROJECT_ROOT not in sys.path:
 # Import Paths
 # ======================================================
 
-from config.paths import (
-    REPORT_FOLDER,
-    VALIDATION_REPORT
-)
+from config.paths import REPORT_FOLDER, VALIDATION_REPORT
 
 # ======================================================
 # Validation Report
 # ======================================================
+
 
 class ValidationReport:
 
@@ -55,17 +45,11 @@ class ValidationReport:
 
     def calculate_score(self):
 
-        passed = sum(
-            result["status"]
-            for result in self.results
-        )
+        passed = sum(result["status"] for result in self.results)
 
         total = len(self.results)
 
-        score = round(
-            passed / total * 100,
-            2
-        )
+        score = round(passed / total * 100, 2)
 
         return passed, total, score
 
@@ -85,45 +69,27 @@ class ValidationReport:
 
     def export_txt(self):
 
-        os.makedirs(
-            REPORT_FOLDER,
-            exist_ok=True
-        )
+        os.makedirs(REPORT_FOLDER, exist_ok=True)
 
         passed, total, score = self.calculate_score()
 
         status = self.dataset_status(score)
 
-        with open(
-            VALIDATION_REPORT,
-            "w",
-            encoding="utf-8"
-        ) as f:
+        with open(VALIDATION_REPORT, "w", encoding="utf-8") as f:
 
             f.write("=" * 60 + "\n")
             f.write("OJT DATASET VALIDATION REPORT\n")
             f.write("=" * 60 + "\n\n")
 
-            f.write(
-                f"Generated Time : "
-                f"{datetime.now()}\n\n"
-            )
+            f.write(f"Generated Time : " f"{datetime.now()}\n\n")
 
-            f.write(
-                f"Passed Rules : {passed}\n"
-            )
+            f.write(f"Passed Rules : {passed}\n")
 
-            f.write(
-                f"Failed Rules : {total-passed}\n"
-            )
+            f.write(f"Failed Rules : {total-passed}\n")
 
-            f.write(
-                f"Data Quality Score : {score}%\n"
-            )
+            f.write(f"Data Quality Score : {score}%\n")
 
-            f.write(
-                f"Dataset Status : {status}\n\n"
-            )
+            f.write(f"Dataset Status : {status}\n\n")
 
             f.write("=" * 60 + "\n")
 
@@ -131,18 +97,11 @@ class ValidationReport:
 
                 text = "PASS" if result["status"] else "FAIL"
 
-                f.write(
-                    f"[{text}] "
-                    f"{result['rule']}\n"
-                )
+                f.write(f"[{text}] " f"{result['rule']}\n")
 
-                f.write(
-                    f"{result['message']}\n"
-                )
+                f.write(f"{result['message']}\n")
 
-                f.write(
-                    "-" * 60 + "\n"
-                )
+                f.write("-" * 60 + "\n")
 
         print()
 
@@ -156,44 +115,25 @@ class ValidationReport:
 
     def export_excel(self):
 
-        os.makedirs(
-            REPORT_FOLDER,
-            exist_ok=True
-        )
+        os.makedirs(REPORT_FOLDER, exist_ok=True)
 
-        excel_path = os.path.join(
-            REPORT_FOLDER,
-            "validation_report.xlsx"
-        )
+        excel_path = os.path.join(REPORT_FOLDER, "validation_report.xlsx")
 
         rows = []
 
         for result in self.results:
 
-            rows.append({
-
-                "Rule":
-
-                    result["rule"],
-
-                "Status":
-
-                    "PASS"
-                    if result["status"]
-                    else "FAIL",
-
-                "Message":
-
-                    result["message"]
-
-            })
+            rows.append(
+                {
+                    "Rule": result["rule"],
+                    "Status": "PASS" if result["status"] else "FAIL",
+                    "Message": result["message"],
+                }
+            )
 
         df = pd.DataFrame(rows)
 
-        df.to_excel(
-            excel_path,
-            index=False
-        )
+        df.to_excel(excel_path, index=False)
 
         print(excel_path)
 

@@ -201,6 +201,7 @@ def check_remaining_to_ojt(df):
 # Risk Score
 # ==========================================================
 
+
 def check_risk_score(df):
 
     invalid_count = 0
@@ -215,22 +216,16 @@ def check_risk_score(df):
             invalid_count += 1
 
     if invalid_count == 0:
-        return create_result(
-            "Risk Score",
-            True,
-            "Risk scores are valid."
-        )
+        return create_result("Risk Score", True, "Risk scores are valid.")
 
-    return create_result(
-        "Risk Score",
-        False,
-        f"{invalid_count} invalid risk scores."
-    )
+    return create_result("Risk Score", False, f"{invalid_count} invalid risk scores.")
+
 
 # ==========================================================
 # Rule 10
 # Risk Level
 # ==========================================================
+
 
 def check_risk_level(df):
 
@@ -238,9 +233,7 @@ def check_risk_level(df):
 
     for _, student in df.iterrows():
 
-        expected = get_risk_level(
-            student["Risk_Score"]
-        )
+        expected = get_risk_level(student["Risk_Score"])
 
         actual = student["Risk_Level"]
 
@@ -248,22 +241,16 @@ def check_risk_level(df):
             invalid_count += 1
 
     if invalid_count == 0:
-        return create_result(
-            "Risk Level",
-            True,
-            "Risk levels are valid."
-        )
+        return create_result("Risk Level", True, "Risk levels are valid.")
 
-    return create_result(
-        "Risk Level",
-        False,
-        f"{invalid_count} invalid risk levels."
-    )
+    return create_result("Risk Level", False, f"{invalid_count} invalid risk levels.")
+
 
 # ==========================================================
 # Rule 11
 # Delay Risk Label
 # ==========================================================
+
 
 def check_delay_risk(df):
 
@@ -271,11 +258,7 @@ def check_delay_risk(df):
 
     for _, student in df.iterrows():
 
-        expected = (
-            0
-            if student["Risk_Score"] <= 10
-            else 1
-        )
+        expected = 0 if student["Risk_Score"] <= 10 else 1
 
         actual = int(student["OJT_Delay_Risk"])
 
@@ -283,16 +266,10 @@ def check_delay_risk(df):
             invalid_count += 1
 
     if invalid_count == 0:
-        return create_result(
-            "Delay Risk",
-            True,
-            "Delay risk labels are valid."
-        )
+        return create_result("Delay Risk", True, "Delay risk labels are valid.")
 
     return create_result(
-        "Delay Risk",
-        False,
-        f"{invalid_count} invalid delay risk labels."
+        "Delay Risk", False, f"{invalid_count} invalid delay risk labels."
     )
 
 
@@ -301,15 +278,14 @@ def check_delay_risk(df):
 # OJT Eligible
 # ==========================================================
 
+
 def check_ojt_eligible(df):
 
     invalid_count = 0
 
     for _, student in df.iterrows():
 
-        expected = check_ojt_eligibility(
-            student
-        )
+        expected = check_ojt_eligibility(student)
 
         actual = student["OJT_Eligible"]
 
@@ -317,16 +293,10 @@ def check_ojt_eligible(df):
             invalid_count += 1
 
     if invalid_count == 0:
-        return create_result(
-            "OJT Eligible",
-            True,
-            "OJT eligibility values are valid."
-        )
+        return create_result("OJT Eligible", True, "OJT eligibility values are valid.")
 
     return create_result(
-        "OJT Eligible",
-        False,
-        f"{invalid_count} invalid OJT eligibility values."
+        "OJT Eligible", False, f"{invalid_count} invalid OJT eligibility values."
     )
 
 
@@ -335,35 +305,26 @@ def check_ojt_eligible(df):
 # Readiness
 # ==========================================================
 
+
 def check_readiness(df):
 
     invalid_count = 0
 
     for _, student in df.iterrows():
 
-        expected = calculate_ojt_readiness(
-            student
-        )
+        expected = calculate_ojt_readiness(student)
 
         actual = student["OJT_Readiness"]
 
-        if abs(
-            float(actual) - float(expected)
-        ) > 0.01:
+        if abs(float(actual) - float(expected)) > 0.01:
 
             invalid_count += 1
 
     if invalid_count == 0:
-        return create_result(
-            "Readiness",
-            True,
-            "Readiness values are valid."
-        )
+        return create_result("Readiness", True, "Readiness values are valid.")
 
     return create_result(
-        "Readiness",
-        False,
-        f"{invalid_count} invalid readiness values."
+        "Readiness", False, f"{invalid_count} invalid readiness values."
     )
 
 
@@ -372,15 +333,14 @@ def check_readiness(df):
 # AI Recommendation
 # ==========================================================
 
+
 def check_ai_recommendation(df):
 
     invalid_count = 0
 
     for _, student in df.iterrows():
 
-        expected = generate_ai_recommendation(
-            student
-        )
+        expected = generate_ai_recommendation(student)
 
         actual = student["AI_Recommendation"]
 
@@ -388,16 +348,10 @@ def check_ai_recommendation(df):
             invalid_count += 1
 
     if invalid_count == 0:
-        return create_result(
-            "AI Recommendation",
-            True,
-            "AI recommendations are valid."
-        )
+        return create_result("AI Recommendation", True, "AI recommendations are valid.")
 
     return create_result(
-        "AI Recommendation",
-        False,
-        f"{invalid_count} invalid AI recommendations."
+        "AI Recommendation", False, f"{invalid_count} invalid AI recommendations."
     )
 
 

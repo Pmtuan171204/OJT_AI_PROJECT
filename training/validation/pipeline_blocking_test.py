@@ -16,17 +16,9 @@ import pandas as pd
 # Add Project Root
 # ==========================================================
 
-CURRENT_DIR = os.path.dirname(
-    os.path.abspath(__file__)
-)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PROJECT_ROOT = os.path.abspath(
-    os.path.join(
-        CURRENT_DIR,
-        "..",
-        ".."
-    )
-)
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
 
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
@@ -43,10 +35,10 @@ from config.paths import RAW_DATASET_XLSX
 
 from validator import DatasetValidator
 
-
 # ==========================================================
 # Main Test
 # ==========================================================
+
 
 def main():
 
@@ -68,13 +60,9 @@ def main():
     print("Creating Invalid Test Dataset...")
     print("=" * 60)
 
-    df = pd.read_excel(
-        RAW_DATASET_XLSX
-    )
+    df = pd.read_excel(RAW_DATASET_XLSX)
 
-    print(
-        f"Original Dataset Rows : {len(df)}"
-    )
+    print(f"Original Dataset Rows : {len(df)}")
 
     # ======================================================
     # Inject Validation Error
@@ -89,51 +77,29 @@ def main():
     #
     # We intentionally set the first record to 999.
 
-    original_value = df.loc[
-        0,
-        "Remaining_To_OJT"
-    ]
+    original_value = df.loc[0, "Remaining_To_OJT"]
 
-    df.loc[
-        0,
-        "Remaining_To_OJT"
-    ] = 999
+    df.loc[0, "Remaining_To_OJT"] = 999
 
     print()
-    print(
-        "Injected Error:"
-    )
+    print("Injected Error:")
 
-    print(
-        "Remaining_To_OJT = 999"
-    )
+    print("Remaining_To_OJT = 999")
 
-    print(
-        f"Original Value = {original_value}"
-    )
+    print(f"Original Value = {original_value}")
 
     # ======================================================
     # Save Temporary Invalid Dataset
     # ======================================================
 
-    test_dataset_path = os.path.join(
-        CURRENT_DIR,
-        "temp_invalid_dataset.xlsx"
-    )
+    test_dataset_path = os.path.join(CURRENT_DIR, "temp_invalid_dataset.xlsx")
 
-    df.to_excel(
-        test_dataset_path,
-        index=False
-    )
+    df.to_excel(test_dataset_path, index=False)
 
     print()
-    print(
-        "Temporary invalid dataset created:"
-    )
+    print("Temporary invalid dataset created:")
 
-    print(
-        test_dataset_path
-    )
+    print(test_dataset_path)
 
     # ======================================================
     # Run Validator
@@ -144,9 +110,7 @@ def main():
     print("Running Validator...")
     print("=" * 60)
 
-    validator = DatasetValidator(
-        test_dataset_path
-    )
+    validator = DatasetValidator(test_dataset_path)
 
     validator.validate()
 
@@ -158,11 +122,7 @@ def main():
 
     results = validator.get_results()
 
-    failed = [
-        result
-        for result in results
-        if not result["status"]
-    ]
+    failed = [result for result in results if not result["status"]]
 
     # ======================================================
     # Quality Gate
@@ -175,41 +135,27 @@ def main():
 
     if len(failed) > 0:
 
-        print(
-            "[PASS] Validation failure detected."
-        )
+        print("[PASS] Validation failure detected.")
 
-        print(
-            f"[PASS] Failed Rules : {len(failed)}"
-        )
+        print(f"[PASS] Failed Rules : {len(failed)}")
 
-        print(
-            "[PASS] Pipeline would be blocked."
-        )
+        print("[PASS] Pipeline would be blocked.")
 
         print("=" * 60)
 
         print()
-        print(
-            "PIPELINE BLOCKING TEST PASSED."
-        )
+        print("PIPELINE BLOCKING TEST PASSED.")
 
     else:
 
-        print(
-            "[FAIL] Invalid dataset was not detected."
-        )
+        print("[FAIL] Invalid dataset was not detected.")
 
-        print(
-            "[FAIL] Pipeline would NOT be blocked."
-        )
+        print("[FAIL] Pipeline would NOT be blocked.")
 
         print("=" * 60)
 
         print()
-        print(
-            "PIPELINE BLOCKING TEST FAILED."
-        )
+        print("PIPELINE BLOCKING TEST FAILED.")
 
         # Exit with failure code
         sys.exit(1)
@@ -218,18 +164,12 @@ def main():
     # Cleanup Temporary Dataset
     # ======================================================
 
-    if os.path.exists(
-        test_dataset_path
-    ):
+    if os.path.exists(test_dataset_path):
 
-        os.remove(
-            test_dataset_path
-        )
+        os.remove(test_dataset_path)
 
         print()
-        print(
-            "Temporary test dataset removed."
-        )
+        print("Temporary test dataset removed.")
 
 
 # ==========================================================
