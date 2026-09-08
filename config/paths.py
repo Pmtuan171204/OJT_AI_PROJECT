@@ -134,10 +134,13 @@ RANDOM_FOREST_MODEL = os.path.join(MODEL_DIR, "random_forest.pkl")
 # VALIDATION REPORTS
 # ==========================================================
 
-VALIDATION_REPORT_TXT = os.path.join(REPORTS_DIR, "validation_report.txt")
+REPORT_FOLDER = REPORTS_DIR
 
-VALIDATION_REPORT_XLSX = os.path.join(REPORTS_DIR, "validation_report.xlsx")
+VALIDATION_REPORT = os.path.join(REPORT_FOLDER, "validation_report.txt")
 
+VALIDATION_REPORT_TXT = VALIDATION_REPORT
+
+VALIDATION_REPORT_XLSX = os.path.join(REPORT_FOLDER, "validation_report.xlsx")
 
 # ==========================================================
 # EVALUATION REPORT FILES

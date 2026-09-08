@@ -1,13 +1,3 @@
-"""
-==========================================================
-Validation Rules
-OJT AI Project
-
-This module contains all validation rules
-used before training Machine Learning models.
-==========================================================
-"""
-
 import os
 import sys
 
@@ -17,6 +7,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
 
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
+
 
 from data.generator.profiles import PROFILES
 
@@ -187,6 +178,7 @@ def check_remaining_to_ojt(df):
     invalid = df[df["Remaining_To_OJT"] != expected]
 
     if len(invalid) == 0:
+
         return create_result(
             "Remaining To OJT", True, "Remaining credits to OJT are correct."
         )
@@ -213,9 +205,11 @@ def check_risk_score(df):
         actual = student["Risk_Score"]
 
         if int(actual) != int(expected):
+
             invalid_count += 1
 
     if invalid_count == 0:
+
         return create_result("Risk Score", True, "Risk scores are valid.")
 
     return create_result("Risk Score", False, f"{invalid_count} invalid risk scores.")
@@ -238,9 +232,11 @@ def check_risk_level(df):
         actual = student["Risk_Level"]
 
         if str(actual) != str(expected):
+
             invalid_count += 1
 
     if invalid_count == 0:
+
         return create_result("Risk Level", True, "Risk levels are valid.")
 
     return create_result("Risk Level", False, f"{invalid_count} invalid risk levels.")
@@ -263,9 +259,11 @@ def check_delay_risk(df):
         actual = int(student["OJT_Delay_Risk"])
 
         if actual != expected:
+
             invalid_count += 1
 
     if invalid_count == 0:
+
         return create_result("Delay Risk", True, "Delay risk labels are valid.")
 
     return create_result(
@@ -290,9 +288,11 @@ def check_ojt_eligible(df):
         actual = student["OJT_Eligible"]
 
         if bool(actual) != bool(expected):
+
             invalid_count += 1
 
     if invalid_count == 0:
+
         return create_result("OJT Eligible", True, "OJT eligibility values are valid.")
 
     return create_result(
@@ -321,6 +321,7 @@ def check_readiness(df):
             invalid_count += 1
 
     if invalid_count == 0:
+
         return create_result("Readiness", True, "Readiness values are valid.")
 
     return create_result(
@@ -345,9 +346,11 @@ def check_ai_recommendation(df):
         actual = student["AI_Recommendation"]
 
         if str(actual).strip() != str(expected).strip():
+
             invalid_count += 1
 
     if invalid_count == 0:
+
         return create_result("AI Recommendation", True, "AI recommendations are valid.")
 
     return create_result(
@@ -359,6 +362,8 @@ def check_ai_recommendation(df):
 # Rule 15
 # Student Profile
 # ==========================================================
+
+
 def check_student_profile(df):
     """
     Validate student profile values.
@@ -375,4 +380,152 @@ def check_student_profile(df):
 
     return create_result(
         "Student Profile", False, f"{len(invalid)} invalid student profiles."
+    )
+
+
+# ==========================================================
+# Rule 16
+# Future Credits At OJT
+# ==========================================================
+
+
+def check_future_credits(df):
+
+    invalid = df[
+        (df["Future_Credits_At_OJT"] < 0)
+        | (df["Future_Credits_At_OJT"] > df["Total_Credits"])
+    ]
+
+    if len(invalid) == 0:
+
+        return create_result("Future Credits", True, "Future credits at OJT are valid.")
+
+    return create_result(
+        "Future Credits", False, f"{len(invalid)} invalid future credit values."
+    )
+
+
+# ==========================================================
+# Rule 17
+# Future Failed Courses
+# ==========================================================
+
+
+def check_future_failed_courses(df):
+
+    invalid = df[df["Future_Failed_Courses"] < df["Failed_Courses"]]
+
+    if len(invalid) == 0:
+
+        return create_result(
+            "Future Failed Courses", True, "Future failed course values are valid."
+        )
+
+    return create_result(
+        "Future Failed Courses",
+        False,
+        f"{len(invalid)} invalid future failed course values.",
+    )
+
+
+# ==========================================================
+# Rule 18
+# Future Missing Prerequisites
+# ==========================================================
+
+
+def check_future_missing_prerequisites(df):
+
+    invalid = df[
+        (df["Future_Missing_Prerequisites"] < 0)
+        | (df["Future_Missing_Prerequisites"] > df["Missing_Prerequisite_Courses"])
+    ]
+
+    if len(invalid) == 0:
+
+        return create_result(
+            "Future Missing Prerequisites",
+            True,
+            "Future missing prerequisite values are valid.",
+        )
+
+    return create_result(
+        "Future Missing Prerequisites",
+        False,
+        f"{len(invalid)} invalid future prerequisite values.",
+    )
+
+
+# ==========================================================
+# Rule 19
+# Future Academic Warning
+# ==========================================================
+
+
+def check_future_academic_warning(df):
+
+    invalid = df[df["Future_Academic_Warning"] < df["Academic_Warning_Count"]]
+
+    if len(invalid) == 0:
+
+        return create_result(
+            "Future Academic Warning", True, "Future academic warning values are valid."
+        )
+
+    return create_result(
+        "Future Academic Warning",
+        False,
+        f"{len(invalid)} invalid future academic warning values.",
+    )
+
+
+# ==========================================================
+# Rule 20
+# Future OJT Eligible
+# ==========================================================
+
+
+def check_future_ojt_eligible(df):
+
+    expected = (df["Future_Credits_At_OJT"] >= 100) & (
+        df["Future_Missing_Prerequisites"] == 0
+    )
+
+    actual = df["Future_OJT_Eligible"].astype(bool)
+
+    invalid = df[actual != expected]
+
+    if len(invalid) == 0:
+
+        return create_result(
+            "Future OJT Eligible", True, "Future OJT eligibility values are valid."
+        )
+
+    return create_result(
+        "Future OJT Eligible",
+        False,
+        f"{len(invalid)} invalid future OJT eligibility values.",
+    )
+
+
+# ==========================================================
+# Rule 21
+# OJT Delay Outcome
+# ==========================================================
+
+
+def check_ojt_delay_outcome(df):
+
+    expected = (~df["Future_OJT_Eligible"].astype(bool)).astype(int)
+
+    actual = df["OJT_Delay_Outcome"].astype(int)
+
+    invalid = df[actual != expected]
+
+    if len(invalid) == 0:
+
+        return create_result("OJT Delay Outcome", True, "OJT delay outcomes are valid.")
+
+    return create_result(
+        "OJT Delay Outcome", False, f"{len(invalid)} invalid OJT delay outcomes."
     )

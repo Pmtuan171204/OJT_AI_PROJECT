@@ -2,9 +2,9 @@
 OJT DATASET VALIDATION REPORT
 ============================================================
 
-Generated Time : 2026-08-26 23:41:07.523440
+Generated Time : 2026-09-08 20:22:51.180644
 
-Passed Rules : 15
+Passed Rules : 21
 Failed Rules : 0
 Data Quality Score : 100.0%
 Dataset Status : READY FOR TRAINING
@@ -54,4 +54,22 @@ AI recommendations are valid.
 ------------------------------------------------------------
 [PASS] Student Profile
 Student profiles are valid.
+------------------------------------------------------------
+[PASS] Future Credits
+Future credits at OJT are valid.
+------------------------------------------------------------
+[PASS] Future Failed Courses
+Future failed course values are valid.
+------------------------------------------------------------
+[PASS] Future Missing Prerequisites
+Future missing prerequisite values are valid.
+------------------------------------------------------------
+[PASS] Future Academic Warning
+Future academic warning values are valid.
+------------------------------------------------------------
+[PASS] Future OJT Eligible
+Future OJT eligibility values are valid.
+------------------------------------------------------------
+[PASS] OJT Delay Outcome
+OJT delay outcomes are valid.
 ------------------------------------------------------------
