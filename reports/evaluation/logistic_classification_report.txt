@@ -1,0 +1,21 @@
+LOGISTIC REGRESSION CLASSIFICATION REPORT
+============================================================
+
+Accuracy : 0.9780
+
+              precision    recall  f1-score   support
+
+        Safe     0.9972    0.9728    0.9848       734
+     At Risk     0.9296    0.9925    0.9600       266
+
+    accuracy                         0.9780      1000
+   macro avg     0.9634    0.9826    0.9724      1000
+weighted avg     0.9792    0.9780    0.9782      1000
+
+
+At Risk Class Analysis
+------------------------------
+Precision : 0.9296
+Recall    : 0.9925
+F1-Score  : 0.9600
+Support   : 266

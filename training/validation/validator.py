@@ -111,7 +111,7 @@ class DatasetValidator:
         self.results.append(check_remaining_to_ojt(self.df))
 
         # -----------------------------
-        # AI Validation
+        # AI / Business Rule Validation
         # -----------------------------
 
         self.results.append(check_risk_score(self.df))
@@ -127,6 +127,22 @@ class DatasetValidator:
         self.results.append(check_ai_recommendation(self.df))
 
         self.results.append(check_student_profile(self.df))
+
+        # -----------------------------
+        # Future Outcome Validation
+        # -----------------------------
+
+        self.results.append(check_future_credits(self.df))
+
+        self.results.append(check_future_failed_courses(self.df))
+
+        self.results.append(check_future_missing_prerequisites(self.df))
+
+        self.results.append(check_future_academic_warning(self.df))
+
+        self.results.append(check_future_ojt_eligible(self.df))
+
+        self.results.append(check_ojt_delay_outcome(self.df))
 
     # ==================================================
     # Print Validation Result
@@ -174,6 +190,7 @@ class DatasetValidator:
 # ======================================================
 # Main
 # ======================================================
+
 
 def main():
 

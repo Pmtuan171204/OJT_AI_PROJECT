@@ -30,6 +30,12 @@ from utils import (
     calculate_remaining_to_ojt
 )
 
+import sys
+from pathlib import Path
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from business_rules import (
     calculate_risk_score,
     get_risk_level,
@@ -39,6 +45,7 @@ from business_rules import (
     generate_ai_recommendation
 )
 
+from future_outcome import simulate_ojt_outcome
 
 # =====================================================
 # Generate One Student
@@ -150,6 +157,13 @@ def generate_student(index):
     student["AI_Recommendation"] = (
         generate_ai_recommendation(student)
     )
+
+    # ==============================
+    # Future Outcome Simulation
+    # ==============================
+
+    future_result = simulate_ojt_outcome(student)
+    student.update(future_result)
 
     return student
 
