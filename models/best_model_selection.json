@@ -1,0 +1,20 @@
+{
+    "project": "OJT AI Project",
+    "selection_version": "1.0",
+    "target": "OJT_Delay_Outcome",
+    "selection_metric": "Test F1",
+    "selected_model": "Random Forest",
+    "algorithm": "RandomForestClassifier",
+    "source_model": "D:\\OJT_AI_PROJECT\\models\\random_forest.pkl",
+    "best_model_artifact": "D:\\OJT_AI_PROJECT\\models\\best_model.pkl",
+    "test_performance": {
+        "accuracy": 0.928,
+        "precision": 0.9143426294820717,
+        "recall": 0.9405737704918032,
+        "f1": 0.9272727272727272,
+        "roc_auc": 0.9799204341700819
+    },
+    "ranking": 1,
+    "dataset_type": "synthetic_development_dataset",
+    "note": "The selected model is based on Test F1 from the model comparison stage. The dataset is synthetic development data, so model performance should not be interpreted as real-world OJT prediction performance."
+}
