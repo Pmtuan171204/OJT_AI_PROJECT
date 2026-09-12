@@ -1,0 +1,39 @@
+==================================================
+OJT AI PROJECT - MODEL COMPARISON REPORT
+==================================================
+
+Target: OJT_Delay_Outcome
+Selection Metric: Test F1
+Best Model Candidate: Random Forest
+
+--------------------------------------------------
+MODEL PERFORMANCE
+--------------------------------------------------
+
+Model: Random Forest
+Test Accuracy : 0.9280
+Test Precision: 0.9143
+Test Recall   : 0.9406
+Test F1       : 0.9273
+Test ROC-AUC  : 0.9799
+F1 Gap        : 0.0442
+
+Model: Logistic Regression
+Test Accuracy : 0.8910
+Test Precision: 0.8782
+Test Recall   : 0.9016
+Test F1       : 0.8898
+Test ROC-AUC  : 0.9607
+F1 Gap        : 0.0132
+
+--------------------------------------------------
+SELECTION
+--------------------------------------------------
+Best Model Candidate: Random Forest
+Primary Metric: Test F1
+Reason: F1 balances Precision and Recall.
+
+IMPORTANT NOTE:
+The dataset is a synthetic development dataset.
+The reported performance must not be interpreted
+as real-world OJT prediction performance.

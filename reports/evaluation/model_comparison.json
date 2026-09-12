@@ -1,0 +1,48 @@
+{
+    "project": "OJT AI Project",
+    "target": "OJT_Delay_Outcome",
+    "selection_metric": "Test F1",
+    "best_model_candidate": "Random Forest",
+    "dataset_type": "synthetic_development_dataset",
+    "note": "Model comparison is based on synthetic development data. Results should not be interpreted as real-world OJT prediction performance.",
+    "models": [
+        {
+            "Model": "Random Forest",
+            "Train Accuracy": 0.9725,
+            "Test Accuracy": 0.928,
+            "Train Precision": 0.9827134625458355,
+            "Test Precision": 0.9143426294820717,
+            "Train Recall": 0.9605734767025089,
+            "Test Recall": 0.9405737704918032,
+            "Train F1": 0.9715173485240808,
+            "Test F1": 0.9272727272727272,
+            "Train ROC-AUC": 0.9979307322468833,
+            "Test ROC-AUC": 0.9799204341700819,
+            "Accuracy Gap": 0.044499999999999984,
+            "Precision Gap": 0.06837083306376379,
+            "Recall Gap": 0.01999970621070568,
+            "F1 Gap": 0.04424462125135353,
+            "ROC-AUC Gap": 0.018010298076801434,
+            "F1 Rank": 1
+        },
+        {
+            "Model": "Logistic Regression",
+            "Train Accuracy": 0.90575,
+            "Test Accuracy": 0.891,
+            "Train Precision": 0.9074457083764219,
+            "Test Precision": 0.8782435129740519,
+            "Train Recall": 0.8986175115207373,
+            "Test Recall": 0.9016393442622951,
+            "Train F1": 0.903010033444816,
+            "Test F1": 0.8897876643073812,
+            "Train ROC-AUC": 0.9684969774558001,
+            "Test ROC-AUC": 0.9607333824282787,
+            "Accuracy Gap": 0.01475000000000004,
+            "Precision Gap": 0.029202195402370013,
+            "Recall Gap": -0.0030218327415577617,
+            "F1 Gap": 0.013222369137434797,
+            "ROC-AUC Gap": 0.007763595027521442,
+            "F1 Rank": 2
+        }
+    ]
+}
