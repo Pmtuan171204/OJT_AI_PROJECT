@@ -1,12 +1,3 @@
-"""
-==========================================================
-UTILITY FUNCTIONS
-OJT AI Project
-
-Utility functions for Dataset Generator
-==========================================================
-"""
-
 import random
 import numpy as np
 

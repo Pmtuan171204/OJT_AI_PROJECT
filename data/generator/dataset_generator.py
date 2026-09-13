@@ -1,12 +1,3 @@
-"""
-==========================================================
-DATASET GENERATOR
-OJT AI Project
-
-Generate Synthetic Dataset for OJT Risk Prediction
-==========================================================
-"""
-
 from pathlib import Path
 import pandas as pd
 from tqdm import tqdm

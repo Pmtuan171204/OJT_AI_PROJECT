@@ -1,13 +1,3 @@
-"""
-==========================================================
-STUDENT PROFILES
-OJT AI Project
-
-Each profile represents a typical learning pattern
-of university students.
-==========================================================
-"""
-
 PROFILES = {
 
     # ======================================================

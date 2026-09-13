@@ -1,12 +1,3 @@
-"""
-==========================================================
-Dataset Validator
-OJT AI Project
-
-Validate dataset before Machine Learning training.
-==========================================================
-"""
-
 import os
 import sys
 import pandas as pd

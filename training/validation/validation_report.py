@@ -1,12 +1,3 @@
-"""
-==========================================================
-Validation Report
-OJT AI Project
-
-Generate validation reports after dataset validation.
-==========================================================
-"""
-
 import os
 import sys
 from datetime import datetime

@@ -1,17 +1,3 @@
-"""
-============================================================
-ROC CURVE EVALUATION
-OJT AI Project
-
-Evaluate Logistic Regression using:
-- ROC Curve
-- ROC-AUC Score
-- False Positive Rate
-- True Positive Rate
-
-============================================================
-"""
-
 import os
 import sys
 

@@ -1,13 +1,3 @@
-"""
-==========================================================
-Model Evaluation
-OJT AI Project
-
-Evaluate Logistic Regression performance for
-OJT Delay Risk Prediction.
-==========================================================
-"""
-
 import os
 import sys
 

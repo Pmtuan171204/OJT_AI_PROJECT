@@ -1,39 +1,3 @@
-"""
-==========================================================
-ENCODING VALIDATOR V2
-OJT AI Project
-
-Sprint 3 - Encoding Validation
-
-Purpose:
-    Validate encoded datasets before Machine Learning training.
-
-Validation includes:
-    1. Encoded files exist
-    2. Missing values
-    3. Train/Test feature count
-    4. Train/Test feature names
-    5. Numeric features only
-    6. Target values
-    7. Data leakage - forbidden columns
-    8. Target separation
-    9. Train/Test row alignment
-    10. Infinite values
-    11. Expected encoded feature count
-    12. Dataset shape validation
-
-Target:
-    OJT_Delay_Outcome
-
-Expected:
-    X_train : 4000 rows
-    X_test  : 1000 rows
-    Original model features : 23
-    Encoded features        : 38
-
-==========================================================
-"""
-
 import os
 import sys
 

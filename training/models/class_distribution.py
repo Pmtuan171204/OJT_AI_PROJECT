@@ -1,12 +1,3 @@
-"""
-==========================================================
-Class Distribution Check
-OJT AI Project
-
-Check target class distribution before model training.
-==========================================================
-"""
-
 import os
 import sys
 import pandas as pd

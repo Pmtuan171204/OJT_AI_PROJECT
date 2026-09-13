@@ -1,18 +1,3 @@
-"""
-==========================================================
-Data Leakage Check
-OJT AI Project
-
-Check whether training features contain direct or
-indirect information about the target variable.
-
-Target:
-    OJT_Delay_Risk
-
-This module is used before finalizing ML models.
-==========================================================
-"""
-
 import os
 import sys
 

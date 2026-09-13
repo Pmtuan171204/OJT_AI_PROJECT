@@ -1,16 +1,3 @@
-"""
-==========================================================
-Validation Negative Tests
-OJT AI Project
-
-Purpose:
-Test whether validation rules can detect intentionally
-incorrect dataset values.
-
-The original dataset is NEVER modified.
-==========================================================
-"""
-
 import os
 import sys
 import pandas as pd

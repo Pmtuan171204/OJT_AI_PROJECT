@@ -1,17 +1,3 @@
-"""
-==========================================================
-FUTURE OUTCOME SIMULATOR
-OJT AI Project
-
-Simulate future academic progress and determine
-the actual OJT delay outcome.
-
-Important:
-This module does NOT use Risk_Score to generate
-the OJT delay target.
-==========================================================
-"""
-
 import random
 
 from config import TOTAL_CREDITS, REQUIRED_CREDITS_FOR_OJT, RANDOM_SEED

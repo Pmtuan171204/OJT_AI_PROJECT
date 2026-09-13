@@ -1,17 +1,3 @@
-"""
-==========================================================
-Data Cleaning Module
-OJT AI Project
-
-Sprint 3 - Module 1
-
-This module is responsible for cleaning the raw dataset
-before Feature Engineering and Machine Learning.
-
-Author : OJT AI Project
-==========================================================
-"""
-
 import os
 import sys
 

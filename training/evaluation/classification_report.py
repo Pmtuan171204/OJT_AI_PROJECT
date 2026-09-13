@@ -1,13 +1,3 @@
-"""
-============================================================
-Classification Report
-OJT AI Project
-
-Generate detailed classification metrics for
-Logistic Regression OJT Delay Risk Prediction.
-============================================================
-"""
-
 import os
 import sys
 

@@ -1,13 +1,3 @@
-"""
-==========================================================
-Pipeline Blocking Test
-OJT AI Project
-
-Test whether the validation pipeline correctly blocks
-invalid datasets before preprocessing/training.
-==========================================================
-"""
-
 import os
 import sys
 import pandas as pd

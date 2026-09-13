@@ -1,12 +1,3 @@
-"""
-==========================================================
-BUSINESS RULES
-OJT AI Project
-
-Business logic for OJT Risk Prediction
-==========================================================
-"""
-
 from data.generator.config import (
     LOW_RISK_MAX,
     MEDIUM_RISK_MAX,

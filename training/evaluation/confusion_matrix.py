@@ -1,13 +1,3 @@
-"""
-============================================================
-Confusion Matrix Analysis
-OJT AI Project
-
-Generate and analyze the confusion matrix for
-Logistic Regression OJT Delay Risk Prediction.
-============================================================
-"""
-
 import os
 import sys
 

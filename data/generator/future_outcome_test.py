@@ -1,13 +1,3 @@
-"""
-==========================================================
-FUTURE OUTCOME TEST
-OJT AI Project
-
-Test Future Outcome Simulator independently
-before integrating it into the main dataset generator.
-==========================================================
-"""
-
 from future_outcome import simulate_ojt_outcome
 
 # ==========================================================
